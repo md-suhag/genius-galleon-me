@@ -80,11 +80,15 @@ const HeroSection = () => {
                 </span>
               </motion.div>
 
-              <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold mb-6 text-foreground leading-[0.95]">
-                I'm a{" "}
-                <span className="gradient-text">Backend</span>
-                <br />Developer
+              <p className="font-mono text-sm md:text-base text-muted-foreground/70 mb-3 tracking-wide">Hi, I'm</p>
+              <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold mb-2 text-foreground leading-[0.95]">
+                <span className="gradient-text">Abdus Salam</span>
+                <br />
+                <span className="gradient-text">Suhag</span>
               </h1>
+              <p className="text-2xl md:text-3xl font-display font-semibold text-muted-foreground/80 mb-4">
+                Backend Developer
+              </p>
 
               <div className="h-10 flex items-center justify-center lg:justify-start mb-2">
                 <span className="font-mono text-xl md:text-2xl text-muted-foreground">
