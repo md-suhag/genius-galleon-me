@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
@@ -8,6 +8,7 @@ const projects = [
     tech: ["Node.js", "Express", "MongoDB", "Stripe", "JWT"],
     github: "#",
     live: "#",
+    featured: true,
   },
   {
     title: "Real-Time Chat App",
@@ -15,6 +16,7 @@ const projects = [
     tech: ["Socket.io", "Redis", "React", "TypeScript", "Docker"],
     github: "#",
     live: "#",
+    featured: true,
   },
   {
     title: "Task Management System",
@@ -22,6 +24,7 @@ const projects = [
     tech: ["NestJS", "PostgreSQL", "GraphQL", "Docker", "AWS"],
     github: "#",
     live: "#",
+    featured: false,
   },
   {
     title: "Blog Platform API",
@@ -29,24 +32,29 @@ const projects = [
     tech: ["Express", "MongoDB", "Redis", "Cloudinary", "Elasticsearch"],
     github: "#",
     live: "#",
+    featured: false,
   },
 ];
 
 const ProjectsSection = () => {
   return (
-    <section id="projects" className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="projects" className="py-28 px-6">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          className="text-center mb-16"
         >
           <h2 className="font-mono text-sm text-primary tracking-widest uppercase mb-2">
             {"// projects"}
           </h2>
-          <h3 className="text-3xl md:text-4xl font-mono font-bold text-foreground mb-12">
+          <h3 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-4">
             Featured Work
           </h3>
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            A selection of projects that showcase my expertise in backend development
+          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -57,30 +65,44 @@ const ProjectsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group bg-card border border-border rounded-lg p-6 hover:border-primary/30 transition-all border-glow"
+              className="group bg-card border border-border rounded-xl p-6 card-hover relative overflow-hidden"
             >
-              <div className="flex items-start justify-between mb-3">
-                <h4 className="font-mono text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-                  {project.title}
-                </h4>
-                <div className="flex gap-2">
-                  <a href={project.github} className="text-muted-foreground hover:text-primary transition-colors">
-                    <Github className="w-4 h-4" />
-                  </a>
-                  <a href={project.live} className="text-muted-foreground hover:text-primary transition-colors">
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
+              {project.featured && (
+                <div className="absolute top-4 right-4">
+                  <span className="px-2 py-0.5 bg-primary/10 text-primary font-mono text-[10px] uppercase tracking-wider rounded-full border border-primary/20">
+                    Featured
+                  </span>
                 </div>
+              )}
+
+              <div className="mb-4">
+                <h4 className="font-mono text-lg font-semibold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
+                  {project.title}
+                  <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </h4>
               </div>
-              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+
+              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                 {project.description}
               </p>
-              <div className="flex flex-wrap gap-2">
+
+              <div className="flex flex-wrap gap-2 mb-6">
                 {project.tech.map((t) => (
-                  <span key={t} className="font-mono text-xs text-primary/70 bg-primary/5 px-2 py-1 rounded">
+                  <span key={t} className="font-mono text-xs text-primary/70 bg-primary/5 px-2.5 py-1 rounded-md border border-primary/10">
                     {t}
                   </span>
                 ))}
+              </div>
+
+              <div className="flex gap-3 pt-4 border-t border-border">
+                <a href={project.github} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors text-sm font-mono">
+                  <Github className="w-4 h-4" />
+                  Code
+                </a>
+                <a href={project.live} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors text-sm font-mono">
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
               </div>
             </motion.div>
           ))}
