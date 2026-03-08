@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, User, Code2, FolderKanban, Briefcase, Wrench,
-  MessageSquareQuote, Mail, ChevronLeft, ChevronRight, LogOut, Settings, Menu, X
+  MessageSquareQuote, Mail, ChevronLeft, ChevronRight, LogOut, Settings, Menu, X, FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,7 @@ const navItems = [
   { label: "Experience", href: "/dashboard/experience", icon: Briefcase },
   { label: "Services", href: "/dashboard/services", icon: Wrench },
   { label: "Testimonials", href: "/dashboard/testimonials", icon: MessageSquareQuote },
+  { label: "Blog Posts", href: "/dashboard/blog", icon: FileText },
   { label: "Contact", href: "/dashboard/contact", icon: Mail },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];

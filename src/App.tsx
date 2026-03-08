@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { store } from "@/store";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import BlogPage from "./pages/BlogPage";
+import BlogPostPage from "./pages/BlogPostPage";
 import AdminLayout from "@/components/admin/AdminLayout";
 import DashboardHome from "@/pages/admin/DashboardHome";
 import HeroEditor from "@/pages/admin/HeroEditor";
@@ -17,6 +19,7 @@ import ExperienceEditor from "@/pages/admin/ExperienceEditor";
 import ServicesEditor from "@/pages/admin/ServicesEditor";
 import TestimonialsEditor from "@/pages/admin/TestimonialsEditor";
 import ContactEditor from "@/pages/admin/ContactEditor";
+import BlogEditor from "@/pages/admin/BlogEditor";
 import SettingsPage from "@/pages/admin/SettingsPage";
 
 const queryClient = new QueryClient();
@@ -30,8 +33,9 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
             
-            {/* Admin Dashboard */}
             <Route path="/dashboard" element={<AdminLayout />}>
               <Route index element={<DashboardHome />} />
               <Route path="hero" element={<HeroEditor />} />
@@ -42,6 +46,7 @@ const App = () => (
               <Route path="services" element={<ServicesEditor />} />
               <Route path="testimonials" element={<TestimonialsEditor />} />
               <Route path="contact" element={<ContactEditor />} />
+              <Route path="blog" element={<BlogEditor />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
 
