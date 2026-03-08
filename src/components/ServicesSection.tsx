@@ -36,7 +36,7 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section className="py-28 px-6 relative overflow-hidden">
+    <section id="services" className="py-28 px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-background to-card/30" />
       
       <div className="max-w-6xl mx-auto relative z-10">

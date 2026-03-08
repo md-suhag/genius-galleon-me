@@ -24,7 +24,7 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-28 px-6 relative overflow-hidden">
+    <section id="testimonials" className="py-28 px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
       
       <div className="max-w-6xl mx-auto relative z-10">
