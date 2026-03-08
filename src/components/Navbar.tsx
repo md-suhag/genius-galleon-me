@@ -1,19 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, BookOpen } from "lucide-react";
+import { Menu, X, Home, BookOpen, ChevronDown } from "lucide-react";
 
-const sections = [
+const allSections = [
   { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
   { label: "Skills", href: "#skills" },
+  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
+
+// Show first 4 directly, rest in "More" dropdown
+const visibleSections = allSections.slice(0, 4);
+const overflowSections = allSections.slice(4);
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const moreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -21,39 +30,82 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const linkClass =
+    "px-3 py-2 font-mono text-sm text-muted-foreground hover:text-primary rounded-md hover:bg-primary/5 transition-all";
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-lg shadow-background/50" : "bg-transparent"
-    }`}>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-lg shadow-background/50"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="font-mono text-primary font-bold text-lg hover:text-glow transition-all flex items-center gap-2">
+        <Link
+          to="/"
+          className="font-mono text-primary font-bold text-lg hover:text-glow transition-all flex items-center gap-2"
+        >
           <Home className="w-4 h-4" />
           {"<Dev />"}
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-0.5">
           {isHome ? (
-            sections.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                className="px-4 py-2 font-mono text-sm text-muted-foreground hover:text-primary rounded-md hover:bg-primary/5 transition-all"
-              >
-                {s.label}
-              </a>
-            ))
+            <>
+              {visibleSections.map((s) => (
+                <a key={s.label} href={s.href} className={linkClass}>
+                  {s.label}
+                </a>
+              ))}
+
+              {/* More dropdown */}
+              <div className="relative" ref={moreRef}>
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className={`${linkClass} flex items-center gap-1`}
+                >
+                  More
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform ${moreOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {moreOpen && (
+                  <div className="absolute top-full right-0 mt-2 w-44 bg-background/95 backdrop-blur-xl border border-border rounded-lg shadow-xl shadow-background/50 py-1.5 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {overflowSections.map((s) => (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        onClick={() => setMoreOpen(false)}
+                        className="block px-4 py-2.5 font-mono text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all"
+                      >
+                        {s.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
           ) : (
-            <Link
-              to="/"
-              className="px-4 py-2 font-mono text-sm text-muted-foreground hover:text-primary rounded-md hover:bg-primary/5 transition-all"
-            >
+            <Link to="/" className={linkClass}>
               Home
             </Link>
           )}
+
           <Link
             to="/blog"
-            className={`px-4 py-2 font-mono text-sm rounded-md transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-2 font-mono text-sm rounded-md transition-all flex items-center gap-1.5 ${
               location.pathname.startsWith("/blog")
                 ? "text-primary bg-primary/10"
                 : "text-muted-foreground hover:text-primary hover:bg-primary/5"
@@ -62,9 +114,10 @@ const Navbar = () => {
             <BookOpen className="w-3.5 h-3.5" />
             Blog
           </Link>
+
           <a
             href={isHome ? "#contact" : "/"}
-            className="ml-4 px-5 py-2 bg-primary/10 text-primary border border-primary/20 font-mono text-sm font-medium rounded-lg hover:bg-primary/20 transition-all"
+            className="ml-3 px-5 py-2 bg-primary/10 text-primary border border-primary/20 font-mono text-sm font-medium rounded-lg hover:bg-primary/20 transition-all"
           >
             Hire Me
           </a>
@@ -81,7 +134,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 py-6 flex flex-col gap-2">
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 py-6 flex flex-col gap-1">
           {!isHome && (
             <Link
               to="/"
@@ -93,7 +146,7 @@ const Navbar = () => {
             </Link>
           )}
           {isHome &&
-            sections.map((s) => (
+            allSections.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
