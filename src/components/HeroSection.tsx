@@ -81,7 +81,7 @@ const HeroSection = () => {
               </motion.div>
 
               <p className="font-mono text-sm md:text-base text-muted-foreground/70 mb-3 tracking-wide">Hi, I'm</p>
-              <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold mb-2 text-foreground leading-[0.95]">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-2 text-foreground leading-[0.95]">
                 <span className="gradient-text">Abdus Salam</span>
                 <br />
                 <span className="gradient-text">Suhag</span>
