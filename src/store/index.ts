@@ -7,6 +7,7 @@ import experienceReducer from './slices/experienceSlice';
 import servicesReducer from './slices/servicesSlice';
 import testimonialsReducer from './slices/testimonialsSlice';
 import contactReducer from './slices/contactSlice';
+import blogReducer from './slices/blogSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     services: servicesReducer,
     testimonials: testimonialsReducer,
     contact: contactReducer,
+    blog: blogReducer,
   },
 });
 

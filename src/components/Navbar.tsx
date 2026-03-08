@@ -71,14 +71,25 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 py-6 flex flex-col gap-2">
           {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="px-4 py-3 font-mono text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-all"
-            >
-              {link.label}
-            </a>
+            link.isRoute ? (
+              <Link
+                key={link.label}
+                to={link.href}
+                onClick={() => setOpen(false)}
+                className="px-4 py-3 font-mono text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-all"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="px-4 py-3 font-mono text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-all"
+              >
+                {link.label}
+              </a>
+            )
           ))}
           <a
             href="#contact"
